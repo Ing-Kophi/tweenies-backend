@@ -13,4 +13,13 @@ router.post(
   controller.create
 );
 
+// Update menu item image
+router.put(
+  "/:id/image",
+  protect,
+  upload.single("image"),
+  controller.updateImage
+);
+
+
 module.exports = router;

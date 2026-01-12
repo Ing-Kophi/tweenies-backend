@@ -23,3 +23,19 @@ exports.create = async (req, res) => {
 
   res.json({ message: "Menu item created successfully" });
 };
+
+exports.updateImage = async (req, res) => {
+  const { id } = req.params;
+  const image_url = req.file ? req.file.path : null;
+
+  if (!image_url) {
+    return res.status(400).json({ message: "No image uploaded" });
+  }
+
+  await db.query(
+    "UPDATE menu_items SET image_url = ? WHERE id = ?",
+    [image_url, id]
+  );
+
+  res.json({ message: "Image updated successfully" });
+};
