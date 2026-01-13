@@ -15,10 +15,10 @@ router.post(
 
 // Update menu item image
 router.put(
-  "/:id/image",
+  "/:id",
   protect,
   upload.single("image"),
-  controller.updateImage
+  controller.update
 );
 
 router.delete("/:id", protect, controller.remove);

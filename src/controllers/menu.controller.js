@@ -24,21 +24,31 @@ exports.create = async (req, res) => {
   res.json({ message: "Menu item created successfully" });
 };
 
-exports.updateImage = async (req, res) => {
+exports.update = async (req, res) => {
   const { id } = req.params;
+  const { name, description, price, category_id } = req.body;
+
   const image_url = req.file ? req.file.path : null;
 
-  if (!image_url) {
-    return res.status(400).json({ message: "No image uploaded" });
+  if (image_url) {
+    await db.query(
+      `UPDATE menu_items
+       SET name = ?, description = ?, price = ?, category_id = ?, image_url = ?
+       WHERE id = ?`,
+      [name, description, price, category_id, image_url, id]
+    );
+  } else {
+    await db.query(
+      `UPDATE menu_items
+       SET name = ?, description = ?, price = ?, category_id = ?
+       WHERE id = ?`,
+      [name, description, price, category_id, id]
+    );
   }
 
-  await db.query(
-    "UPDATE menu_items SET image_url = ? WHERE id = ?",
-    [image_url, id]
-  );
-
-  res.json({ message: "Image updated successfully" });
+  res.json({ message: "Menu item updated successfully" });
 };
+
 
 exports.remove = async (req, res) => {
   const { id } = req.params;
