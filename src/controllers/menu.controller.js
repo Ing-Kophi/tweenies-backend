@@ -39,3 +39,9 @@ exports.updateImage = async (req, res) => {
 
   res.json({ message: "Image updated successfully" });
 };
+
+exports.remove = async (req, res) => {
+  const { id } = req.params;
+  await db.query("DELETE FROM menu_items WHERE id = ?", [id]);
+  res.json({ message: "Menu item deleted" });
+};

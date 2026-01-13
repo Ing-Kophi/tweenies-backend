@@ -21,5 +21,6 @@ router.put(
   controller.updateImage
 );
 
+router.delete("/:id", protect, controller.remove);
 
 module.exports = router;
